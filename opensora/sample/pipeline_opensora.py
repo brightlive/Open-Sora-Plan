@@ -210,6 +210,7 @@ class OpenSoraPipeline(DiffusionPipeline):
         text_encoders = [self.text_encoder, self.text_encoder_2]
 
         tokenizer = tokenizers[text_encoder_index]
+        tokenizer.add_special_tokens({'pad_token': '0'})
         text_encoder = text_encoders[text_encoder_index]
 
         if max_sequence_length is None:
