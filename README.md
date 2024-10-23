@@ -80,8 +80,8 @@ Coming soon...
 
 | Version | Architecture |  Diffusion Model | CausalVideoVAE | Data | Prompt Refiner |
 |:---|:---|:---|:---|:---|:---|
-| v1.3.0 | 3D | [Anysize in 93x640x640](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.3.0/tree/main/any93x640x640)[3], more checkpoints are coming soon | [Anysize](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.3.0/tree/main/vae)| - | [checkpoint](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.3.0/tree/main/prompt_refiner)| |
-| v1.2.0 | 3D | [93x720p](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/93x720p), [29x720p](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/29x720p)[1], [93x480p](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/93x480p)[1,2], [29x480p](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/29x480p), [1x480p](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/1x480p), [93x480p_i2v](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/93x480p_i2v) | [Anysize](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/vae)| [Annotations](https://huggingface.co/datasets/LanguageBind/Open-Sora-Plan-v1.2.0) | - |
+| v1.3.0 [4] | Skiparse 3D | [Anysize in 93x640x640](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.3.0/tree/main/any93x640x640)[3], more checkpoints are coming soon | [Anysize](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.3.0/tree/main/vae)| [prompt_refiner](https://huggingface.co/datasets/LanguageBind/Open-Sora-Plan-v1.3.0/tree/main/prompt_refiner) | [checkpoint](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.3.0/tree/main/prompt_refiner)| |
+| v1.2.0 | Dense 3D | [93x720p](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/93x720p), [29x720p](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/29x720p)[1], [93x480p](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/93x480p)[1,2], [29x480p](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/29x480p), [1x480p](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/1x480p), [93x480p_i2v](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/93x480p_i2v) | [Anysize](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.2.0/tree/main/vae)| [Annotations](https://huggingface.co/datasets/LanguageBind/Open-Sora-Plan-v1.2.0) | - |
 | v1.1.0 | 2+1D | [221x512x512](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.1.0/tree/main/221x512x512), [65x512x512](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.1.0/tree/main/65x512x512) |[Anysize](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.1.0/tree/main/vae) |[Data and Annotations](https://huggingface.co/datasets/LanguageBind/Open-Sora-Plan-v1.1.0)| - |
 | v1.0.0 | 2+1D | [65x512x512](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.0.0/tree/main/65x512x512), [65x256x256](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.0.0/tree/main/65x256x256), [17x256x256](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.0.0/tree/main/17x256x256) | [Anysize](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.0.0/tree/main/vae) | [Data and Annotations](https://huggingface.co/datasets/LanguageBind/Open-Sora-Plan-v1.0.0)| - |
 
@@ -90,6 +90,8 @@ Coming soon...
 > [2] We fine-tuned 3.5k steps from 93×720p to get 93×480p for community research use.
 
 > [3] The model is trained arbitrarily on stride=32. So keep the resolution of the inference a multiple of 32. Frames needs to be 4n+1, e.g. 93, 77, 61, 45, 29, 1 (image).
+
+> [4] Model weights are also available at [OpenMind](https://modelers.cn/models/linbin/Open-Sora-Plan-v1.3.0) and [WiseModel](https://wisemodel.cn/models/PKU-YUAN/Open-Sora-Plan-v1.3.0).
 
 > [!Warning]
 >
@@ -122,11 +124,15 @@ pip install -e .
 pip install -e '.[dev]'
 ```
 
-# 🗝️ Training & Validating
+# 🗝️ Training & Inferencing
 
 ## 🗜️ CausalVideoVAE
 
 The data preparation, training, inferencing and evaluation can be found [here](docs/VAE.md)
+
+## 📖 Prompt Refiner
+
+The data preparation, training, inferencing can be found [here](docs/Prompt_Refiner.md)
 
 ## 📜 Text-to-Video 
 
@@ -146,7 +152,7 @@ We currently have two plans: one is to continue using the Deepspeed/FSDP approac
 
 ## ⚡️ 24G VRAM Inferencing
 
-Please first ensure that you understand how to perform inference. Refer to the inference section in Text-to-Video.
+Please first ensure that you understand how to inference. Refer to the [inference](https://github.com/PKU-YuanGroup/Open-Sora-Plan/blob/main/docs/T2V.md#inference) instructions in Text-to-Video.
 Simply specify `--save_memory`, and during inference, `enable_model_cpu_offload()`, `enable_sequential_cpu_offload()`, and `vae.vae.enable_tiling()` will be automatically activated.
 
 # 💡 How to Contribute

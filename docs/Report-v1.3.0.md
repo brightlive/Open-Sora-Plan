@@ -18,6 +18,7 @@ In version 1.3.0, Open-Sora-Plan introduced the following five key features:
 We open-source the Open-Sora-Plan to facilitate future development of Video Generation in the community. Code, data, model will be made publicly available.
 - Code: All training scripts and sample scripts.
 - Model: Both Diffusion Model and CasualVideoVAE [here](https://huggingface.co/LanguageBind/Open-Sora-Plan-v1.3.0).
+- Data: The data of prompt refiner is [here](https://huggingface.co/datasets/LanguageBind/Open-Sora-Plan-v1.3.0/tree/main/prompt_refiner).
 
 ## Gallery
 
@@ -35,7 +36,7 @@ As video generation models move toward higher resolutions and longer durations, 
 
 <center>
 <figure>
-	<img src="https://github.com/user-attachments/assets/a107b046-d7e1-4a32-a429-0a061a4f8ee8" height=400 />
+	<img width="899" alt="SCR-20241023-tzct" src="https://github.com/user-attachments/assets/03615e1d-2633-4247-af0b-d93e2a935e3e">
 </figure>
 </center>
 
@@ -49,15 +50,13 @@ The compression rate fundamentally determines the quality of VAE-reconstructed v
 
 In previous VAE architectures, the lack of a "highway" for transmitting the dominant energy during video compression meant that this pathway had to be gradually established during model training, leading to redundancy in model parameters and structure. Therefore, in our model design, we created a more efficient transmission path for the LLL subband energy, significantly simplifying the model architecture, reducing inference time, and lowering memory consumption.
 
-
-
 #### Training Details
 
-Additional training details and design insights will be provided in the paper.
+More details will be provided in the forthcoming paper.
 
 #### Ablation Study
 
-In our experiments, we used the K400 training and validation sets, conducted on 8xH100 GPUs. The latent dimension was fixed at 4. We observed that as model parameters increased, there was still room for improvement in reconstruction metrics. GroupNorm showed instability during training, performing worse than LayerNorm on PSNR but better on LPIPS. Additional experiments will be detailed in the paper.
+In our experiments, we used the K400 training and validation sets, conducted on 8xH100 GPUs. The latent dimension was fixed at 4. We observed that as model parameters increased, there was still room for improvement in reconstruction metrics. GroupNorm showed instability during training, performing worse than LayerNorm on PSNR but better on LPIPS.
 
 <center>
 <figure>
@@ -66,48 +65,16 @@ In our experiments, we used the K400 training and validation sets, conducted on 
 </figure>
 </center>
 
-
 #### Performance
 
-
-In the inference performance test on 33xPxP videos without tiling, WF-VAE significantly outperformed other open-source VAEs. 
+The following metrics were tested on H100 with float32 precision. For fairness, tiling was disabled for all models, and direct inference was performed.
 
 <center>
 <figure>
-	<img src="https://github.com/user-attachments/assets/bd2502d2-206c-4267-a769-98d1239b7f48" height=250 />
+	<img width="765" alt="SCR-20241023-tzwz" src="https://github.com/user-attachments/assets/f7d4f225-5d22-4152-90ad-32716884ae6c">
 </figure>
 </center>
 
-
-During DiT training, we focused only on the encoding time and memory requirements of the VAE's encoder. We tested the encoding performance in float32 on H100.
-
-
-
-**33x256x256**
-| Model | Encode Memory | Encode Time | 
-|---|---|---|
-| WF-VAE-S|1614.00 MB |0.027 |
-| OD-VAE | 8718.00 MB |0.088  |
-
-**33x512x512**
-| Model | Encode Memory | Encode Time | 
-|---|---|---|
-| WF-VAE-S | 4652.00 MB | 0.095 |
-| OD-VAE | 31944.00 MB |0.353  |
-
-**33x768x768**
-| Model | Encode Memory | Encode Time | 
-|---|---|---|
-| WF-VAE-S | 9734.00 MB | 0.244 |
-| OD-VAE | 65912.00 MB | 0.811 |
-
-**93x768x768**
-| Model | Encode Memory | Encode Time | 
-|---|---|---|
-| WF-VAE-S | 26382.00 MB | 0.668 |
-| WF-VAE-M | 31438.00 MB | 0.841 |
-| WF-VAE-L | 37098.00 MB | 1.216 |
-| OD-VAE | OOM | N/A |
 
 #### Evaluation
 
@@ -117,7 +84,7 @@ We evaluated PSNR and LPIPS on the Panda70M test set at 256 pixels and 33 frames
 | Latent Dim | Model | Params |  PSNR |  LPIPS | 
 |---|---|---|---|---|
 | 4 | OD-VAE（Our VAE in v1.2.0） | 94M + 144M | 30.311| 0.043|
-| 4 | WFVAE-S | 38M + 108M |30.824 |0.052 |
+| 4 | WFVAE-S | 38M + 108M | 30.579 | 0.044 |
 | 8 | WFVAE-S（Distillion） |38M + 108M | 31.764|0.050 |
 
 #### Causal Cache
@@ -158,7 +125,7 @@ conceive some additional actions to make the sentence more dynamic,
 make sure it is a fluent sentence, not nonsense.
 ```
 
-Finally, we performed LoRA fine-tuning using [LLaMa 3.1](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct), completing the training in just 30 minutes with a single H100. We fine-tuned for only 1 epoch, using a batch size of 32 and a LoRA rank of 64. The log can be found [here](https://api.wandb.ai/links/1471742727-Huawei/p5xmkft5).
+Finally, we performed LoRA fine-tuning using [LLaMa 3.1](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct), completing the training in just 30 minutes with a single H100. We fine-tuned for only 1 epoch, using a batch size of 32 and a LoRA rank of 64. The log can be found [here](https://api.wandb.ai/links/1471742727-Huawei/p5xmkft5). We open-sourced the data [here](https://huggingface.co/datasets/LanguageBind/Open-Sora-Plan-v1.3.0/tree/main/prompt_refiner).
 
 ### Data Construction
 
